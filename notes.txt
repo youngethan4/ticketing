@@ -1,1 +1,8 @@
 kubectl create secret generic jwt-secret --from-literal=JWT_KEY=key
+
+kubectl port-forward [pod name] port:port
+
+Cross language support for common module
+- JSON Schema
+- Protobug
+- Apache Avro
