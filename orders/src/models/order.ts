@@ -1,6 +1,6 @@
-import { OrderStatus } from '@ey-tickets/common';
-import mongoose from 'mongoose';
-import { TicketDoc } from './ticket';
+import { OrderStatus } from "@ey-tickets/common";
+import mongoose from "mongoose";
+import { TicketDoc } from "./ticket";
 
 export { OrderStatus };
 
@@ -39,7 +39,7 @@ const orderSchema = new mongoose.Schema(
     },
     ticket: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Ticket',
+      ref: "Ticket",
     },
   },
   {
@@ -48,7 +48,6 @@ const orderSchema = new mongoose.Schema(
         ret.id = ret._id;
         delete ret._id;
       },
-      versionKey: false,
     },
   }
 );
@@ -57,6 +56,6 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
 };
 
-const Order = mongoose.model<OrderDoc, OrderModel>('Order', orderSchema);
+const Order = mongoose.model<OrderDoc, OrderModel>("Order", orderSchema);
 
 export { Order };
