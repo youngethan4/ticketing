@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-service
@@ -11,18 +11,30 @@ spec:
       http:
         paths:
           - path: /api/users/?(.*)
+            pathType: Prefix
             backend:
-              serviceName: auth-svc
-              servicePort: 3000
+              service:
+                name: auth-svc
+                port:
+                  number: 3000
           - path: /api/tickets/?(.*)
+            pathType: Prefix
             backend:
-              serviceName: tickets-svc
-              servicePort: 3000
+              service:
+                name: tickets-svc
+                port:
+                  number: 3000
           - path: /api/orders/?(.*)
+            pathType: Prefix
             backend:
-              serviceName: orders-svc
-              servicePort: 3000
+              service:
+                name: orders-svc
+                port:
+                  number: 3000
           - path: /?(.*)
+            pathType: Prefix
             backend:
-              serviceName: client-svc
-              servicePort: 3000
+              service:
+                name: client-svc
+                port:
+                  number: 3000

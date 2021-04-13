@@ -1,24 +1,24 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response } from 'express';
 import {
   BadRequestError,
   NotFoundError,
   requireAuth,
   validateRequest,
-} from "@ey-tickets/common";
-import { body } from "express-validator";
-import { Ticket } from "../models/ticket";
-import { Order, OrderStatus } from "../models/order";
-import { natsWrapper } from "../nats-wrapper";
-import { OrderCreatedPublisher } from "../events/publishers/order-created-publisher";
+} from '@ey-tickets/common';
+import { body } from 'express-validator';
+import { Ticket } from '../models/ticket';
+import { Order, OrderStatus } from '../models/order';
+import { natsWrapper } from '../nats-wrapper';
+import { OrderCreatedPublisher } from '../events/publishers/order-created-publisher';
 
 const router = express.Router();
 
 const EXPIRATION_WINDOW_SECONDS = 15 * 60;
 
 router.post(
-  "/api/orders",
+  '/api/orders',
   requireAuth,
-  [body("ticketId").not().isEmpty().withMessage("TicketId must be provided")],
+  [body('ticketId').not().isEmpty().withMessage('TicketId must be provided')],
   validateRequest,
   async (req: Request, res: Response) => {
     const { ticketId } = req.body;
@@ -28,7 +28,7 @@ router.post(
 
     // Make sure the ticket is not already reserved
     const isReserved = await ticket.isReserved();
-    if (isReserved) throw new BadRequestError("Ticket is reserved");
+    if (isReserved) throw new BadRequestError('Ticket is reserved');
 
     // Calculate an expiration date for this order
     const expiration = new Date();
@@ -47,7 +47,7 @@ router.post(
     new OrderCreatedPublisher(natsWrapper.client).publish({
       id: order.id,
       status: order.status,
-      version: order.__v || 0,
+      version: order.version,
       userId: order.userId,
       expiresAt: order.expiresAt.toISOString(),
       ticket: {
