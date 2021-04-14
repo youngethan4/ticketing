@@ -1,0 +1,45 @@
+# Sign Up
+POST https://ticketing.dev/api/users/signup
+content-type: application/json
+
+{
+  "email": "hi@hi.hi",
+  "password": "hihi"
+}
+
+###
+# Sign in
+POST https://ticketing.dev/api/users/signin
+content-type: application/json
+
+{
+  "email": "hi@hi.hi",
+  "password": "hihi"
+}
+
+###
+# Current User
+GET https://ticketing.dev/api/users/currentuser
+
+###
+# Sign out
+POST https://ticketing.dev/api/users/signout
+
+###
+# Create ticket
+POST https://ticketing.dev/api/tickets
+content-type: application/json
+
+{
+  "title": "title",
+  "price": 34
+}
+
+###
+# Create order
+POST https://ticketing.dev/api/orders
+Content-type: application/json
+
+{
+  "ticketId": "60771b83fd4c76001a27a472"
+}
