@@ -41,5 +41,15 @@ POST https://ticketing.dev/api/orders
 Content-type: application/json
 
 {
-  "ticketId": "60771b83fd4c76001a27a472"
+  "ticketId": "60775d7504eae4002f53a665"
+}
+
+###
+# Create payment
+Post https://ticketing.dev/api/payments
+Content-type: application/json
+
+{
+  "token": "tok_visa",
+  "orderId": "60775d7ea6a6d0001da1c9c4"
 }

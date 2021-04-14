@@ -1,10 +1,8 @@
 import mongoose from 'mongoose';
 import { app } from './app';
+import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
 import { natsWrapper } from './nats-wrapper';
-import { TicketCreatedListener } from './events/listeners/ticket-created-listener';
-import { TicketUpdatedListener } from './events/listeners/ticket-updated-listener';
-import { ExpirationCompleteListener } from './events/listeners/expiration-complete-listener';
-import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
 
 const port = 3000;
 
@@ -16,6 +14,7 @@ const start = async () => {
   if (!process.env.NATS_CLUSTER_ID)
     throw new Error('NATS_CLUSTER_ID not defined');
   if (!process.env.NATS_URL) throw new Error('NATS_URL not defined');
+  if (!process.env.STRIPE_KEY) throw new Error('STRIPE_KEY not defined');
 
   try {
     await natsWrapper.connect(
@@ -33,10 +32,8 @@ const start = async () => {
     process.on('SIGTERM', () => natsWrapper.client.close());
 
     //Listeners
-    new TicketCreatedListener(natsWrapper.client).listen();
-    new TicketUpdatedListener(natsWrapper.client).listen();
-    new ExpirationCompleteListener(natsWrapper.client).listen();
-    new PaymentCreatedListener(natsWrapper.client).listen();
+    new OrderCancelledListener(natsWrapper.client).listen();
+    new OrderCreatedListener(natsWrapper.client).listen();
 
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
