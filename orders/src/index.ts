@@ -18,6 +18,8 @@ const start = async () => {
   if (!process.env.NATS_URL) throw new Error('NATS_URL not defined');
 
   try {
+    console.log('Starting orders service...');
+
     await natsWrapper.connect(
       process.env.NATS_CLUSTER_ID,
       process.env.NATS_CLIENT_ID,
