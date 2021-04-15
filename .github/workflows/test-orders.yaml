@@ -2,8 +2,10 @@ name: tests-orders
 
 # event
 on:
-  pull_request
-  
+  pull_request:
+    path:
+      - 'orders/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest

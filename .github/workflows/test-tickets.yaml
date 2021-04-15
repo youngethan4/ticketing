@@ -2,8 +2,10 @@ name: tests-tickets
 
 # event
 on:
-  pull_request
-  
+  pull_request:
+    path:
+      - 'tickets/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest
