@@ -7,6 +7,8 @@ import { natsWrapper } from './nats-wrapper';
 const port = 3000;
 
 const start = async () => {
+  console.log('Starting tickets service...');
+
   if (!process.env.JWT_KEY) throw new Error('JWT key not defined');
   if (!process.env.MONGO_URI) throw new Error('MONGO_URI not defined');
   if (!process.env.NATS_CLIENT_ID)
