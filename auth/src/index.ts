@@ -4,7 +4,7 @@ import { app } from './app';
 const port = 3000;
 
 const start = async () => {
-  console.log('Starting auth service...');
+  console.log('Starting auth service....');
   if (!process.env.JWT_KEY) throw new Error('JWT key not defined');
   if (!process.env.MONGO_URI) throw new Error('MONGO_URI not defined');
 
