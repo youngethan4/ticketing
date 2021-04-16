@@ -1,13 +1,14 @@
-name: tests
+name: tests-auth
 
 # event
 on:
-  pull_request
-  
+  pull_request:
+    path:
+      - 'auth/**'
+
 jobs:
   build:
-    runs-on: ubuntu-lates
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: cd auth && npm install && npm run test:ci
-      
